@@ -1,4 +1,11 @@
 /*=============== LOADER ===============*/
+onload = () => {
+    const load = document.querySelector('#load');
+
+    setTimeout(() => {
+        load.style.display = 'none';
+    }, 2500);
+  }
 
 /*=============== SHOW MENU ===============*/
 const navMenu = document.getElementById("nav-menu"),
@@ -62,6 +69,30 @@ function activeProducts(){
 }
 
 linkProducts.forEach(l => l.addEventListener('click', activeProducts))
-/*=============== SHOW SCROLL UP ===============*/
 
+/*=============== SHOW SCROLL UP ===============*/
+function scrollUp(){
+  const scrollUp = document.getElementById('scroll-up');
+  // Quando a rolagem for maior que 350 de altura da janela de visualização, será adicionada a classe show-scroll à tag a com a classe scroll-top
+  if(this.scrollY >= 350) scrollUp.classList.add('show-scroll'); else scrollUp.classList.remove('show-scroll')
+}
+window.addEventListener('scroll', scrollUp)
 /*=============== SCROLL SECTIONS ACTIVE LINK ===============*/
+const sections = document.querySelectorAll('section[id]')
+
+function scrollActive(){
+    const scrollY = window.pageYOffset
+
+    sections.forEach(current =>{
+        const sectionHeight = current.offsetHeight,
+              sectionTop = current.offsetTop - 58,
+              sectionId = current.getAttribute('id')
+
+        if(scrollY > sectionTop && scrollY <= sectionTop + sectionHeight){
+            document.querySelector('.nav__menu a[href*=' + sectionId + ']').classList.add('active-link')
+        }else{
+            document.querySelector('.nav__menu a[href*=' + sectionId + ']').classList.remove('active-link')
+        }
+    })
+}
+window.addEventListener('scroll', scrollActive)
